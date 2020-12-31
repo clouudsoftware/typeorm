@@ -390,7 +390,7 @@ export class InsertQueryBuilder<Entity> extends QueryBuilder<Entity> {
     protected createColumnNamesExpression(): string {
         const columns = this.getInsertedColumns();
         if (columns.length > 0)
-            return columns.map(column => this.escape(column.databaseName)).join(", ");
+            return columns.map(column => this.escape(column.databaseName, true)).join(", ");
 
         // in the case if there are no insert columns specified and table without metadata used
         // we get columns from the inserted value map, in the case if only one inserted map is specified

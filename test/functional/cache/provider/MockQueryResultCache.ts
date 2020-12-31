@@ -29,7 +29,7 @@ export class MockQueryResultCache implements QueryResultCache {
 
         const options = <SqlServerConnectionOptions|PostgresConnectionOptions>this.connection.driver.options;
         const cacheOptions = typeof this.connection.options.cache === "object" ? this.connection.options.cache : {};
-        const cacheTableName = cacheOptions.tableName || "mock-query-result-cache";
+        const cacheTableName = cacheOptions.tableName || "mockqueryresultcache";
 
         this.queryResultCacheTable = this.connection.driver.buildTableName(cacheTableName, options.schema, options.database);
     }
@@ -112,10 +112,12 @@ export class MockQueryResultCache implements QueryResultCache {
      */
     getFromCache(options: QueryResultCacheOptions, queryRunner?: QueryRunner): Promise<QueryResultCacheOptions|undefined> {
         queryRunner = this.getQueryRunner(queryRunner);
-        const qb = this.connection
-            .createQueryBuilder(queryRunner)
-            .select()
+        let qb = this.connection.createQueryBuilder(queryRunner);
+
+        if(!(this.connection.driver instanceof OracleDriver)) {
+            qb.select()
             .from(this.queryResultCacheTable, "cache");
+        }
 
         if (options.identifier) {
             return qb
@@ -126,7 +128,10 @@ export class MockQueryResultCache implements QueryResultCache {
         } else if (options.query) {
             if (this.connection.driver instanceof OracleDriver) {
                 return qb
-                    .where(`dbms_lob.compare(${qb.escape("cache")}.${qb.escape("query")}, :query) = 0`, { query: options.query })
+                    .createQueryBuilder()
+                    .select(["id AS \"id\"", "identifier AS \"identifier\"", "time AS \"time\"", "duration AS \"duration\"", "query AS \"query\"", "result AS \"result\""])
+                    .from(this.queryResultCacheTable, "cache")
+                    .where(`dbms_lob.compare(${qb.escape("cache", false)}.${qb.escape("query", false)}, :query) = 0`, { query: options.query })
                     .getRawOne();
             }
 
@@ -180,7 +185,7 @@ export class MockQueryResultCache implements QueryResultCache {
                 .set(insertedValues);
 
             if (this.connection.driver instanceof OracleDriver) {
-                qb.where(`dbms_lob.compare("query", :condition) = 0`, { condition: insertedValues.query });
+                qb.where(`dbms_lob.compare(query, :condition) = 0`, { condition: insertedValues.query });
 
             } else {
                 qb.where(`${qb.escape("query")} = :condition`, { condition: insertedValues.query });

@@ -468,10 +468,10 @@ export abstract class QueryBuilder<Entity> {
     /**
      * Escapes table name, column name or alias name using current database's escaping character.
      */
-    escape(name: string): string {
+    escape(name: string, isTable?: boolean, isAlias?: boolean): string {
         if (!this.expressionMap.disableEscaping)
             return name;
-        return this.connection.driver.escape(name);
+        return this.connection.driver.escape(name, isTable, isAlias);
     }
 
     /**
@@ -513,7 +513,7 @@ export abstract class QueryBuilder<Entity> {
                 // this condition need because in SQL Server driver when custom database name was specified and schema name was not, we got `dbName..tableName` string, and doesn't need to escape middle empty string
                 if (i === "")
                     return i;
-                return this.escape(i);
+                return this.escape(i, true);
             }).join(".");
     }
 
@@ -714,7 +714,7 @@ export abstract class QueryBuilder<Entity> {
 
         if (columns.length) {
             let columnsExpression = columns.map(column => {
-                const name = this.escape(column.databaseName);
+                const name = this.escape(column.databaseName, true);
                 if (driver instanceof SqlServerDriver) {
                     if (this.expressionMap.queryType === "insert" || this.expressionMap.queryType === "update" || this.expressionMap.queryType === "soft-delete" || this.expressionMap.queryType === "restore") {
                         return "INSERTED." + name;

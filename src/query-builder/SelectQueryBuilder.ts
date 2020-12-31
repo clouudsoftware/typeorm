@@ -1441,7 +1441,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
             });
 
         const select = this.createSelectDistinctExpression();
-        const selection = allSelects.map(select => select.selection + (select.aliasName ? " AS " + this.escape(select.aliasName) : "")).join(", ");
+        const selection = allSelects.map(select => select.selection + (select.aliasName ? " AS " + this.escape(select.aliasName, false, true) : "")).join(", ");
 
         return select + selection + " FROM " + froms.join(", ") + lock;
     }
