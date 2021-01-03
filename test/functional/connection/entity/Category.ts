@@ -23,6 +23,6 @@ export class Category {
     childCategories: Category[];
 
     @TreeLevelColumn()
-    level: number;
+    categoryLevel: number;
 
 }

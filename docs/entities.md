@@ -26,7 +26,9 @@ You can create an entity by defining a new class and mark it with `@Entity()`:
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -115,7 +117,9 @@ There are several types of primary columns:
 ```typescript
 import {Entity, PrimaryColumn} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryColumn()
@@ -130,7 +134,9 @@ export class User {
 ```typescript
 import {Entity, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -145,7 +151,9 @@ export class User {
 ```typescript
 import {Entity, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn("uuid")
@@ -160,7 +168,9 @@ You can have composite primary columns as well:
 ```typescript
 import {Entity, PrimaryColumn} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryColumn()
@@ -358,7 +368,9 @@ export enum UserRole {
     GHOST = "ghost"
 }
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -379,7 +391,9 @@ Using array with enum values:
 ```typescript
 export type UserRoleType = "admin" | "editor" | "ghost",
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -406,7 +420,9 @@ export enum UserRole {
     GHOST = "ghost"
 }
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -426,7 +442,9 @@ Using array with `set` values:
 ```typescript
 export type UserRoleType = "admin" | "editor" | "ghost",
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -447,7 +465,9 @@ There is a special column type called `simple-array` which can store primitive a
 All values are separated by a comma. For example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -484,7 +504,9 @@ without any hassle.
 For example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -509,7 +531,9 @@ When you'll load data from the database, you will have your object/array/primiti
 You can create column with generated value using `@Generated` decorator. For example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryColumn()

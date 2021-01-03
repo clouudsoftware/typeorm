@@ -6,6 +6,7 @@ import {EntityMetadata} from "../../../../../src/metadata/EntityMetadata";
 import {IndexMetadata} from "../../../../../src/metadata/IndexMetadata";
 import {expect} from "chai";
 import {PersonSchema} from "./entity/Person";
+import { OracleDriver } from "../../../../../src/driver/oracle/OracleDriver";
 
 describe("entity-schema > indices > basic", () => {
 
@@ -26,7 +27,11 @@ describe("entity-schema > indices > basic", () => {
         expect(table!.indices[0].name).to.be.equal("IDX_TEST");
         expect(table!.indices[0].isUnique).to.be.false;
         expect(table!.indices[0].columnNames.length).to.be.equal(2);
-        expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+        if(connection.driver instanceof OracleDriver) {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+        } else {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+        }
 
     })));
 
@@ -51,9 +56,13 @@ describe("entity-schema > indices > basic", () => {
         } else {
             expect(table!.indices.length).to.be.equal(1);
             expect(table!.indices[0].name).to.be.equal("IDX_TEST");
-            expect(table!.indices[0].isUnique).to.be.true;
             expect(table!.indices[0].columnNames.length).to.be.equal(2);
-            expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+            if(connection.driver instanceof OracleDriver) {
+                expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+            } else {
+                expect(table!.indices[0].isUnique).to.be.true;
+                expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+            }
         }
 
     })));
@@ -81,9 +90,13 @@ describe("entity-schema > indices > basic", () => {
 
         expect(table!.indices.length).to.be.equal(1);
         expect(table!.indices[0].name).to.be.equal("IDX_TEST");
-        expect(table!.indices[0].isUnique).to.be.false;
         expect(table!.indices[0].columnNames.length).to.be.equal(2);
-        expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+        if(connection.driver instanceof OracleDriver) {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+        } else {
+            expect(table!.indices[0].isUnique).to.be.false;
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+        }
 
     })));
 

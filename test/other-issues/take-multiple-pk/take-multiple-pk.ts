@@ -49,10 +49,10 @@ describe("other issues > using take with multiple primary keys", () => {
         // check if ordering by main object works correctly
 
         const loadedUsers1 = await connection.manager
-          .createQueryBuilder(User, "user")
-          .innerJoinAndSelect("user.roles", "roles")
+          .createQueryBuilder(User, "users")
+          .innerJoinAndSelect("users.roles", "roles")
           .take(10)
-          .orderBy("user.id", "DESC")
+          .orderBy("users.id", "DESC")
           .getMany();
 
         expect(loadedUsers1).not.to.be.undefined;
@@ -69,11 +69,11 @@ describe("other issues > using take with multiple primary keys", () => {
         loadedUsers1[9].id.should.be.equal(91);
 
         const lefties = await connection.manager
-          .createQueryBuilder(User, "user")
-          .innerJoinAndSelect("user.roles", "roles")
-          .where("user.handedness = :handedness", { handedness: "left" })
+          .createQueryBuilder(User, "users")
+          .innerJoinAndSelect("users.roles", "roles")
+          .where("users.handedness = :handedness", { handedness: "left" })
           .take(5)
-          .orderBy("user.id", "DESC")
+          .orderBy("users.id", "DESC")
           .getMany();
 
         expect(lefties).not.to.be.undefined;

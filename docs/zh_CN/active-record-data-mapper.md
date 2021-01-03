@@ -108,7 +108,9 @@ const timber = await User.findByName("Timber", "Saw");
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

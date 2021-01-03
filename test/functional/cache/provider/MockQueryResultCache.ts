@@ -11,7 +11,7 @@ import {QueryResultCache} from "../../../../src/cache/QueryResultCache";
 import {QueryResultCacheOptions} from "../../../../src/cache/QueryResultCacheOptions";
 
 /**
- * Caches query result into current database, into separate table called "mock-query-result-cache".
+ * Caches query result into current database, into separate table called "mockqueryresultcache".
  */
 export class MockQueryResultCache implements QueryResultCache {
 
@@ -112,12 +112,10 @@ export class MockQueryResultCache implements QueryResultCache {
      */
     getFromCache(options: QueryResultCacheOptions, queryRunner?: QueryRunner): Promise<QueryResultCacheOptions|undefined> {
         queryRunner = this.getQueryRunner(queryRunner);
-        let qb = this.connection.createQueryBuilder(queryRunner);
-
-        if(!(this.connection.driver instanceof OracleDriver)) {
-            qb.select()
+        const qb = this.connection
+            .createQueryBuilder(queryRunner)
+            .select()
             .from(this.queryResultCacheTable, "cache");
-        }
 
         if (options.identifier) {
             return qb
@@ -128,10 +126,7 @@ export class MockQueryResultCache implements QueryResultCache {
         } else if (options.query) {
             if (this.connection.driver instanceof OracleDriver) {
                 return qb
-                    .createQueryBuilder()
-                    .select(["id AS \"id\"", "identifier AS \"identifier\"", "time AS \"time\"", "duration AS \"duration\"", "query AS \"query\"", "result AS \"result\""])
-                    .from(this.queryResultCacheTable, "cache")
-                    .where(`dbms_lob.compare(${qb.escape("cache", false)}.${qb.escape("query", false)}, :query) = 0`, { query: options.query })
+                    .where(`dbms_lob.compare(${qb.escape("cache")}.${qb.escape("query")}, :query) = 0`, { query: options.query })
                     .getRawOne();
             }
 

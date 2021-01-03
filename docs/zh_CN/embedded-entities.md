@@ -12,7 +12,9 @@
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()
@@ -93,7 +95,9 @@ export class Name {
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 import {Name} from "./Name";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()

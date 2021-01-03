@@ -73,7 +73,9 @@ date: Date;
 假设我们有两个实体：`User`和`Photo`：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

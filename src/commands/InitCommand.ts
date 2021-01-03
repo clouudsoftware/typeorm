@@ -223,7 +223,9 @@ temp/`;
     protected static getUserEntityTemplate(database: string): string {
         return `import {Entity, ${ database === "mongodb" ? "ObjectIdColumn, ObjectID" : "PrimaryGeneratedColumn" }, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     ${ database === "mongodb" ? "@ObjectIdColumn()" : "@PrimaryGeneratedColumn()" }

@@ -170,7 +170,9 @@ npm i typeorm mysql reflect-metadata --save
 ```typescript
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

@@ -6,6 +6,7 @@ import {expect} from "chai";
 import {PersonSchema} from "./entity/Person";
 import {MysqlDriver} from "../../../../src/driver/mysql/MysqlDriver";
 import {AbstractSqliteDriver} from "../../../../src/driver/sqlite-abstract/AbstractSqliteDriver";
+import { OracleDriver } from "../../../../src/driver/oracle/OracleDriver";
 
 describe("entity-schema > uniques", () => {
 
@@ -38,7 +39,11 @@ describe("entity-schema > uniques", () => {
             expect(table!.uniques.length).to.be.equal(1);
             expect(table!.uniques[0].name).to.be.equal("UNIQUE_TEST");
             expect(table!.uniques[0].columnNames.length).to.be.equal(2);
-            expect(table!.uniques[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+            if(connection.driver instanceof OracleDriver) {
+                expect(table!.uniques[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+            } else {
+                expect(table!.uniques[0].columnNames).to.deep.include.members(["FirstName", "LastName"]);
+            }
         }
 
     })));

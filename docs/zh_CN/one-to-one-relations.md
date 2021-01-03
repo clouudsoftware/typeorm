@@ -25,7 +25,9 @@ export class Profile {
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Profile } from "./Profile";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -130,7 +132,9 @@ export class Profile {
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Profile } from "./Profile";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

@@ -27,8 +27,8 @@ describe("other issues > ekifox reported issue with increment", () => {
 
         const loadedUser = await connection
             .manager
-            .createQueryBuilder(User, "user")
-            .where("user.id = :id", { id: 1 })
+            .createQueryBuilder(User, "users")
+            .where("users.id = :id", { id: 1 })
             .getOne();
 
         expect(loadedUser).not.to.be.undefined;

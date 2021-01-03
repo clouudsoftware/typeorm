@@ -3,7 +3,9 @@ import {PrimaryGeneratedColumn} from "../../../../../src/decorator/columns/Prima
 import {DeleteDateColumn} from "../../../../../src/decorator/columns/DeleteDateColumn";
 import {Column} from "../../../../../src/decorator/columns/Column";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()

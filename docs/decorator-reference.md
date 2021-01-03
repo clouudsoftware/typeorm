@@ -211,7 +211,9 @@ Same as `@Column` decorator but sets its `primary` option to true.
 Example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryColumn()
@@ -229,7 +231,9 @@ Column it creates is primary and its value is auto-generated.
 Example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -249,7 +253,9 @@ function. This produces a 64-bit integer from the current timestamp and ID of th
 Default generation strategy is `increment`, to change it to another strategy, simply pass it as the first argument to decorator:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn("uuid")
@@ -268,7 +274,9 @@ Every entity in MongoDB must have a ObjectID column.
 Example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @ObjectIdColumn()
@@ -286,7 +294,9 @@ You don't need to write a value into this column - it will be automatically set.
 Example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @CreateDateColumn()
@@ -302,7 +312,9 @@ each time you call `save` from entity manager or repository.
 You don't need to write a value into this column - it will be automatically set.
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @UpdateDateColumn()
@@ -320,7 +332,9 @@ TypeORM's own soft delete functionality utilizes global scopes to only pull "non
 If the @DeleteDateColumn is set, the default scope will be "non-deleted".
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @DeleteDateColumn()
@@ -336,7 +350,9 @@ each time you call `save` from entity manager or repository.
 You don't need to write a value into this column - it will be automatically set.
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @VersionColumn()
@@ -350,7 +366,9 @@ export class User {
 Marks column to be a generated value. For example:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @Column()
@@ -375,7 +393,9 @@ Example:
 import {Entity, OneToOne, JoinColumn} from "typeorm";
 import {Profile} from "./Profile";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @OneToOne(type => Profile, profile => profile.user)
@@ -426,7 +446,9 @@ Example:
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
 import {Photo} from "./Photo";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -759,7 +781,9 @@ and use it on the entity when a single index on multiple columns is required.
 Examples:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @Index()

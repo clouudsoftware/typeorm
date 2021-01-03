@@ -50,8 +50,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -95,8 +95,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser1 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -113,8 +113,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser2 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -159,8 +159,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser1 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -177,8 +177,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser2 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -222,8 +222,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser1 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 
@@ -240,8 +240,8 @@ describe("persistence > many-to-many", function() {
         // load a post
         const loadedUser2 = await userRepository.findOne(newUser.id, {
             join: {
-                alias: "user",
-                leftJoinAndSelect: { post: "user.post", categories: "post.categories" }
+                alias: "users",
+                leftJoinAndSelect: { post: "users.post", categories: "post.categories" }
             }
         });
 

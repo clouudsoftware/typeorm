@@ -172,7 +172,9 @@ Let's create a `User` entity inside `src/entity`:
 ```typescript
 import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()

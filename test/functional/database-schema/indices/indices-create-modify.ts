@@ -2,6 +2,7 @@ import {expect} from "chai";
 import "reflect-metadata";
 import {Connection, EntityMetadata} from "../../../../src";
 import {CockroachDriver} from "../../../../src/driver/cockroachdb/CockroachDriver";
+import { OracleDriver } from "../../../../src/driver/oracle/OracleDriver";
 import {IndexMetadata} from "../../../../src/metadata/IndexMetadata";
 import {closeTestingConnections, createTestingConnections, reloadTestingDatabases} from "../../../utils/test-utils";
 
@@ -26,7 +27,12 @@ describe("database schema > indices > reading index from entity and updating dat
         expect(table!.indices[0].name).to.be.equal("IDX_TEST");
         expect(table!.indices[0].isUnique).to.be.false;
         expect(table!.indices[0].columnNames.length).to.be.equal(2);
-        expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "lastname"]);
+
+        if (connection.driver instanceof OracleDriver) {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+        } else {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "lastname"]);
+        }
 
     })));
 
@@ -51,9 +57,17 @@ describe("database schema > indices > reading index from entity and updating dat
         } else {
             expect(table!.indices.length).to.be.equal(1);
             expect(table!.indices[0].name).to.be.equal("IDX_TEST");
-            expect(table!.indices[0].isUnique).to.be.true;
+            
+            if (!(connection.driver instanceof OracleDriver)) {
+                expect(table!.indices[0].isUnique).to.be.true;
+            }
             expect(table!.indices[0].columnNames.length).to.be.equal(2);
-            expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "firstname"]);
+
+            if (connection.driver instanceof OracleDriver) {
+                expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+            } else {
+                expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "lastname"]);
+            }
         }
 
     })));
@@ -81,9 +95,15 @@ describe("database schema > indices > reading index from entity and updating dat
 
         expect(table!.indices.length).to.be.equal(1);
         expect(table!.indices[0].name).to.be.equal("IDX_TEST");
-        expect(table!.indices[0].isUnique).to.be.false;
-        expect(table!.indices[0].columnNames.length).to.be.equal(2);
-        expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "lastname"]);
 
+        if(!(connection.driver instanceof OracleDriver)) {
+            expect(table!.indices[0].isUnique).to.be.false;
+        }
+        expect(table!.indices[0].columnNames.length).to.be.equal(2);
+        if (connection.driver instanceof OracleDriver) {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["FIRSTNAME", "LASTNAME"]);
+        } else {
+            expect(table!.indices[0].columnNames).to.deep.include.members(["firstname", "lastname"]);
+        }
     })));
 });

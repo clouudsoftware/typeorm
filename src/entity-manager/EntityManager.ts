@@ -175,7 +175,6 @@ export class EntityManager {
     createQueryBuilder<Entity>(entityClass?: EntityTarget<Entity>|QueryRunner, alias?: string, queryRunner?: QueryRunner): SelectQueryBuilder<Entity> {
         if (alias) {
             return this.connection.createQueryBuilder(entityClass as EntityTarget<Entity>, alias, queryRunner || this.queryRunner);
-
         } else {
             return this.connection.createQueryBuilder(entityClass as QueryRunner|undefined || queryRunner || this.queryRunner);
         }
@@ -920,9 +919,14 @@ export class EntityManager {
 
         // find already created repository instance and return it if found
         const metadata = this.connection.getMetadata(target);
+        
+        // If a `name` has been defined in the @Entity decorator, use this as the name of the class
+        metadata.name = metadata.tableName || metadata.name;
+
         const repository = this.repositories.find(repository => repository.metadata === metadata);
-        if (repository)
+        if (repository) {
             return repository;
+        }
 
         // if repository was not found then create it, store its instance and return it
         const newRepository = new RepositoryFactory().create(this, metadata, this.queryRunner);

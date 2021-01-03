@@ -25,7 +25,9 @@
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -114,7 +116,9 @@ const connection: Connection = await createConnection({
 ```typescript
 import { Entity, PrimaryColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryColumn()
     id: number;
@@ -126,7 +130,9 @@ export class User {
 ```typescript
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -138,7 +144,9 @@ export class User {
 ```typescript
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -150,7 +158,9 @@ export class User {
 ```typescript
 import { Entity, PrimaryColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryColumn()
     firstName: string;
@@ -308,7 +318,9 @@ export enum UserRole {
     GHOST = "ghost"
 }
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -331,7 +343,9 @@ export class User {
 ```typescript
 export type UserRoleType = "admin" | "editor" | "ghost",
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -352,7 +366,9 @@ export class User {
 所有值都以逗号分隔。 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -379,7 +395,9 @@ user.names = ["Alexander", "Alex", "Sasha", "Shurik"];
 例如:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -402,7 +420,9 @@ user.profile = { name: "John", nickname: "Malkovich" };
 你可以使用`@Generated`装饰器创建具有生成值的列。 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryColumn()
     id: number;
@@ -617,6 +637,6 @@ export class Category {
     parent: Category;
 
     @TreeLevelColumn()
-    level: number;
+    categoryLevel: number;
 }
 ```

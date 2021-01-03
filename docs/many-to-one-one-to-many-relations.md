@@ -27,7 +27,9 @@ export class Photo {
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
 import {Photo} from "./Photo";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()

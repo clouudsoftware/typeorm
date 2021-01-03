@@ -25,7 +25,7 @@ describe.skip("persistence > cascades > remove", () => {
         await connection.manager.save(user);
 
         const loadedUser = await connection.manager
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .leftJoinAndSelect("user.manyPhotos", "manyPhotos")
             .leftJoinAndSelect("user.manyToManyPhotos", "manyToManyPhotos")
             .getOne();

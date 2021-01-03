@@ -559,7 +559,9 @@ Let's say you have the following entities:
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
 import {Photo} from "./Photo";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -1005,7 +1007,9 @@ Let's say you have the following entity:
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
 
     @PrimaryGeneratedColumn()

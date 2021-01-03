@@ -33,7 +33,7 @@ describe.skip("github issues > #1591 Define order of relation data when querying
         }
 
         await connection
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .leftJoinAndSelect("user.photos", "photo")
             .orderBy("user.name")
             .addOrderBy("photo.date")

@@ -3,6 +3,7 @@ import {ColumnMetadata} from "../metadata/ColumnMetadata";
 import {ForeignKeyMetadata} from "../metadata/ForeignKeyMetadata";
 import {Connection} from "../connection/Connection";
 import {IndexMetadata} from "../metadata/IndexMetadata";
+import {OracleDriver} from "../driver/oracle/OracleDriver";
 
 /**
  * Creates EntityMetadata for junction tables of the closure entities.
@@ -101,7 +102,7 @@ export class ClosureJunctionEntityMetadataBuilder {
                 args: {
                     target: "",
                     mode: "virtual",
-                    propertyName: "level",
+                    propertyName: this.connection.driver instanceof OracleDriver ? "depth": "level",
                     options: {
                         type: this.connection.driver.mappedDataTypes.treeLevel,
                     }

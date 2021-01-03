@@ -32,7 +32,7 @@ describe("github issues > #57 cascade insert not working with OneToOne relations
         // get to check
         const tokens = await connection.getRepository(AccessToken)
             .createQueryBuilder("token")
-            .innerJoinAndSelect("token.user", "user")
+            .innerJoinAndSelect("token.user", "users")
             .getMany();
 
         expect(tokens).not.to.be.undefined;
@@ -47,8 +47,8 @@ describe("github issues > #57 cascade insert not working with OneToOne relations
 
         // get from inverse side and check
         const users = await connection.getRepository(User)
-            .createQueryBuilder("user")
-            .innerJoinAndSelect("user.access_token", "token")
+            .createQueryBuilder("users")
+            .innerJoinAndSelect("users.access_token", "token")
             .getMany();
 
         expect(users).not.to.be.undefined;

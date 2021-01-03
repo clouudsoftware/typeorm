@@ -224,9 +224,9 @@ describe("embedded > embedded-one-to-one", () => {
             await connection.getRepository(User).save(user2);
 
             let loadedUsers = await connection.manager
-                .createQueryBuilder(User, "user")
-                .leftJoinAndSelect("user.likedPost", "likedPost")
-                .orderBy("user.id")
+                .createQueryBuilder(User, "users")
+                .leftJoinAndSelect("users.likedPost", "likedPost")
+                .orderBy("users.id")
                 .getMany();
 
             expect(loadedUsers[0].should.be.eql(
@@ -271,9 +271,9 @@ describe("embedded > embedded-one-to-one", () => {
             ));
 
             let loadedUser = await connection.manager
-                .createQueryBuilder(User, "user")
-                .leftJoinAndSelect("user.likedPost", "likedPost")
-                .where("user.id = :id", { id: 1 })
+                .createQueryBuilder(User, "users")
+                .leftJoinAndSelect("users.likedPost", "likedPost")
+                .where("users.id = :id", { id: 1 })
                 .getOne();
 
             expect(loadedUser!.should.be.eql(

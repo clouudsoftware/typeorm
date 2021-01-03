@@ -65,9 +65,9 @@ describe("embedded > embedded-many-to-many-case2", () => {
             await connection.getRepository(User).save(user3);
 
             const loadedUsers = await connection.manager
-                .createQueryBuilder(User, "user")
-                .leftJoinAndSelect("user.likedPosts", "likedPost")
-                .orderBy("user.id")
+                .createQueryBuilder(User, "users")
+                .leftJoinAndSelect("users.likedPosts", "likedPost")
+                .orderBy("users.id")
                 .addOrderBy("likedPost.id")
                 .getMany();
 
@@ -153,10 +153,10 @@ describe("embedded > embedded-many-to-many-case2", () => {
             ));
 
             const loadedUser = await connection.manager
-                .createQueryBuilder(User, "user")
-                .leftJoinAndSelect("user.likedPosts", "likedPost")
+                .createQueryBuilder(User, "users")
+                .leftJoinAndSelect("users.likedPosts", "likedPost")
                 .orderBy("likedPost.id")
-                .where("user.id = :id", {id: 1})
+                .where("users.id = :id", {id: 1})
                 .getOne();
 
             expect(loadedUser!.should.be.eql(
@@ -201,10 +201,10 @@ describe("embedded > embedded-many-to-many-case2", () => {
             await connection.getRepository(User).save(loadedUser!);
 
             const loadedUser2 = await connection.manager
-                .createQueryBuilder(User, "user")
-                .leftJoinAndSelect("user.likedPosts", "likedPost")
+                .createQueryBuilder(User, "users")
+                .leftJoinAndSelect("users.likedPosts", "likedPost")
                 .orderBy("likedPost.id")
-                .where("user.id = :id", {id: 1})
+                .where("users.id = :id", {id: 1})
                 .getOne();
 
             expect(loadedUser2!.should.be.eql(

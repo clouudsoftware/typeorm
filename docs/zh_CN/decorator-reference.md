@@ -202,7 +202,9 @@ export class User {
 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryColumn()
     id: number;
@@ -218,7 +220,9 @@ export class User {
 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -233,7 +237,9 @@ export class User {
 默认生成策略是`increment`，将其更改为`uuid`，只需将其作为 decorator 的第一个参数传递：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id: number;
@@ -250,7 +256,9 @@ MongoDB 中的每个实体都必须具有 ObjectID 列。
 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @ObjectIdColumn()
     id: ObjectID;
@@ -266,7 +274,9 @@ export class User {
 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @CreateDateColumn()
     createdDate: Date;
@@ -279,7 +289,9 @@ export class User {
 不需要在此列中手动写入值，该值会自动设置。
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @UpdateDateColumn()
     updatedDate: Date;
@@ -292,7 +304,9 @@ export class User {
 不需要在此列中手动写入值，该值会自动设置。
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @VersionColumn()
     version: number;
@@ -304,7 +318,9 @@ export class User {
 将列标记为生成的值。 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @Column()
     @Generated("uuid")
@@ -327,7 +343,9 @@ export class User {
 import { Entity, OneToOne, JoinColumn } from "typeorm";
 import { Profile } from "./Profile";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @OneToOne(type => Profile, profile => profile.user)
     @JoinColumn()
@@ -374,7 +392,9 @@ User 可以拥有多张 photos，但每张 photo 仅由一位 user 拥有。
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Photo } from "./Photo";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -673,7 +693,9 @@ export class PostSubscriber implements EntitySubscriberInterface {
 例如：
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     @Index()
     @Column()

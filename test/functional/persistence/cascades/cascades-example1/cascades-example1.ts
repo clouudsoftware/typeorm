@@ -28,8 +28,8 @@ describe("persistence > cascades > example 1", () => {
         await connection.manager.save(user);
 
         const loadedUser = await connection.manager
-            .createQueryBuilder(User, "user")
-            .leftJoinAndSelect("user.profile", "profile")
+            .createQueryBuilder(User, "users")
+            .leftJoinAndSelect("users.profile", "profile")
             .leftJoinAndSelect("profile.photo", "profilePhoto")
             .leftJoinAndSelect("profile.user", "profileUser")
             .getOne();

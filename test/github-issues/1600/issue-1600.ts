@@ -24,20 +24,20 @@ describe("github issues > #1600 Postgres: QueryBuilder insert with Postgres arra
         await connection.manager.save(users);
 
         const loadedUsers1 = await connection
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .getMany();
 
         loadedUsers1.length.should.be.equal(10);
 
         const loadedUsers2 = await connection
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .where("user.id IN (:...ids)", { ids: [1, 2, 3, 15] })
             .getMany();
 
         loadedUsers2.length.should.be.equal(3);
 
         const loadedUsers3 = await connection
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .where("user.id = ANY(:ids)", { ids: [1, 2, 15] })
             .getMany();
 
@@ -61,7 +61,7 @@ describe("github issues > #1600 Postgres: QueryBuilder insert with Postgres arra
             .execute();
 
         const loadedUsers = await connection
-            .createQueryBuilder(User, "user")
+            .createQueryBuilder(User, "users")
             .getMany();
 
         loadedUsers.length.should.be.equal(10);

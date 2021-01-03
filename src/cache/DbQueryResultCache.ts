@@ -11,7 +11,7 @@ import {QueryResultCache} from "./QueryResultCache";
 import {QueryResultCacheOptions} from "./QueryResultCacheOptions";
 
 /**
- * Caches query result into current database, into separate table called "query-result-cache".
+ * Caches query result into current database, into separate table called "queryresultcache".
  */
 export class DbQueryResultCache implements QueryResultCache {
 
@@ -112,14 +112,18 @@ export class DbQueryResultCache implements QueryResultCache {
      */
     getFromCache(options: QueryResultCacheOptions, queryRunner?: QueryRunner): Promise<QueryResultCacheOptions|undefined> {
         queryRunner = this.getQueryRunner(queryRunner);
-        const qb = this.connection
-            .createQueryBuilder(queryRunner)
-            .select()
-            .from(this.queryResultCacheTable, "cache");
+        let qb = this.connection.createQueryBuilder(queryRunner);
+
+        if(!(this.connection.driver instanceof OracleDriver)) {
+            qb.select();
+        } else {
+            qb.select(["id AS \"id\"", "identifier AS \"identifier\"", "time AS \"time\"", "duration AS \"duration\"", "query AS \"query\"", "result AS \"result\""]);
+        }
+        qb.from(this.queryResultCacheTable, qb.escape("cache", true));
 
         if (options.identifier) {
             return qb
-                .where(`${qb.escape("cache")}.${qb.escape("identifier")} = :identifier`)
+                .where(`${qb.escape("cache", true)}.${qb.escape("identifier", true)} = :identifier`)
                 .setParameters({ identifier: this.connection.driver instanceof SqlServerDriver ? new MssqlParameter(options.identifier, "nvarchar") : options.identifier })
                 .getRawOne();
 
@@ -131,7 +135,7 @@ export class DbQueryResultCache implements QueryResultCache {
             }
 
             return qb
-                .where(`${qb.escape("cache")}.${qb.escape("query")} = :query`)
+                .where(`${qb.escape("cache", true)}.${qb.escape("query", false)} = :query`)
                 .setParameters({ query: this.connection.driver instanceof SqlServerDriver ? new MssqlParameter(options.query, "nvarchar") : options.query })
                 .getRawOne();
         }

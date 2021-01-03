@@ -72,7 +72,9 @@ TypeORM 的一些特性:
 ```ts
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

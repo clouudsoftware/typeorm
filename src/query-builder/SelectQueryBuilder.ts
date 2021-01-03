@@ -1,5 +1,6 @@
 import {SapDriver} from "../driver/sap/SapDriver";
 import {RawSqlResultsToEntityTransformer} from "./transformer/RawSqlResultsToEntityTransformer";
+import {OracleRawSqlResultsToEntityTransformer} from "./transformer/OracleRawSqlResultsToEntityTransformer";
 import {ObjectLiteral} from "../common/ObjectLiteral";
 import {SqlServerDriver} from "../driver/sqlserver/SqlServerDriver";
 import {PessimisticLockTransactionRequiredError} from "../error/PessimisticLockTransactionRequiredError";
@@ -1441,7 +1442,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
             });
 
         const select = this.createSelectDistinctExpression();
-        const selection = allSelects.map(select => select.selection + (select.aliasName ? " AS " + this.escape(select.aliasName, false, true) : "")).join(", ");
+        const selection = allSelects.map(select => select.selection + (select.aliasName ? " AS " + this.escape(select.aliasName) : "")).join(", ");
 
         return select + selection + " FROM " + froms.join(", ") + lock;
     }
@@ -1484,7 +1485,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
 
             const relation = joinAttr.relation;
             const destinationTableName = joinAttr.tablePath;
-            const destinationTableAlias = joinAttr.alias.name;
+            const destinationTableAlias = joinAttr.alias.tablePath || joinAttr.alias.name;
             const appendedCondition = joinAttr.condition ? " AND (" + joinAttr.condition + ")" : "";
             const parentAlias = joinAttr.parentAlias;
 
@@ -1511,7 +1512,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
 
                 // JOIN `post` `post` ON `post`.`categoryId` = `category`.`id`
                 const condition = relation.inverseRelation!.joinColumns.map(joinColumn => {
-                    return destinationTableAlias + "." + relation.inverseRelation!.propertyPath + "." + joinColumn.referencedColumn!.propertyPath + "=" +
+                    return destinationTableAlias + "." + relation.inverseRelation!.propertyPath + "." + joinColumn.referencedColumn!.propertyPath + " = " +
                         parentAlias + "." + joinColumn.referencedColumn!.propertyPath;
                 }).join(" AND ");
 
@@ -1569,11 +1570,14 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
      */
     protected createOrderByExpression() {
         const orderBys = this.expressionMap.allOrderBys;
+
+        console.log(this.expressionMap.mainAlias!.name);
+
         if (Object.keys(orderBys).length > 0)
             return " ORDER BY " + Object.keys(orderBys)
                     .map(columnName => {
                         if (typeof orderBys[columnName] === "string") {
-                            return this.replacePropertyNames(columnName) + " " + orderBys[columnName];
+                            return `${this.replacePropertyNames(columnName)} ${orderBys[columnName]}`;
                         } else {
                             return this.replacePropertyNames(columnName) + " " + (orderBys[columnName] as any).order + " " + (orderBys[columnName] as any).nulls;
                         }
@@ -1918,11 +1922,11 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
 
                 const alias = DriverUtils.buildColumnAlias(
                     this.connection.driver,
-                    "ids_" + mainAliasName,
+                    this.connection.driver.escape("ids_" + mainAliasName),
                     primaryColumn.databaseName
                 );
 
-                return `${distinctAlias}.${columnAlias} as "${alias}"`;
+                return `${distinctAlias}.${columnAlias} as ${alias}`;
             });
 
             rawResults = await new SelectQueryBuilder(this.connection, queryRunner)
@@ -1951,7 +1955,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
                 } else {
                     const alias = DriverUtils.buildColumnAlias(
                         this.connection.driver,
-                        "ids_" + mainAliasName,
+                        this.connection.driver.escape("ids_" + mainAliasName),
                         metadata.primaryColumns[0].databaseName
                     );
 
@@ -1980,7 +1984,13 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
             // transform raw results into entities
             const rawRelationIdResults = await relationIdLoader.load(rawResults);
             const rawRelationCountResults = await relationCountLoader.load(rawResults);
-            const transformer = new RawSqlResultsToEntityTransformer(this.expressionMap, this.connection.driver, rawRelationIdResults, rawRelationCountResults, this.queryRunner);
+
+            let transformer;
+            if(this.connection.driver instanceof OracleDriver) {
+                transformer = new OracleRawSqlResultsToEntityTransformer(this.expressionMap, this.connection.driver, rawRelationIdResults, rawRelationCountResults, this.queryRunner);
+            } else {
+                transformer = new RawSqlResultsToEntityTransformer(this.expressionMap, this.connection.driver, rawRelationIdResults, rawRelationCountResults, this.queryRunner);
+            }
             entities = transformer.transform(rawResults, this.expressionMap.mainAlias!);
 
             // broadcast all "after load" events

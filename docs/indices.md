@@ -15,7 +15,9 @@ Example:
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()
@@ -36,7 +38,9 @@ You can also specify an index name:
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()
@@ -61,7 +65,9 @@ To create an unique index you need to specify `{ unique: true }` in the index op
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()

@@ -22,7 +22,9 @@ Simple entity example:
 ```typescript
 import {Entity, ObjectID, ObjectIdColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @ObjectIdColumn()
@@ -98,7 +100,9 @@ export class Photo {
 ```typescript
 import {Entity, ObjectID, ObjectIdColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @ObjectIdColumn()

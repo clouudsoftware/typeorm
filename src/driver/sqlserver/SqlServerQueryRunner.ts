@@ -682,7 +682,7 @@ export class SqlServerQueryRunner extends BaseQueryRunner implements QueryRunner
         const upQueries: Query[] = [];
         const downQueries: Query[] = [];
 
-        upQueries.push(new Query(`ALTER TABLE ${this.escapePath(table)} ADD ${this.buildCreateColumnSql(table, column, false, true)}`));
+        upQueries.push(new Query(`ALTER TABLE ${this.escapePath(table)} ADD ${this.buildCreateColumnSql(table, column, false, false)}`));
         downQueries.push(new Query(`ALTER TABLE ${this.escapePath(table)} DROP COLUMN "${column.name}"`));
 
         // create or update primary key constraint

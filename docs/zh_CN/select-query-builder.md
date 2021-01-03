@@ -495,7 +495,9 @@ SELECT ... FROM users user OFFSET 10
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Photo } from "./Photo";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -950,7 +952,9 @@ const posts = await connection
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

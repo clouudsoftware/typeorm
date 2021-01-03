@@ -76,7 +76,9 @@ Let's start with `one-to-one` relation.
 Let's say we have two entities: `User` and `Photo`:
 
 ```typescript
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()

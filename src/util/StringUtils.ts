@@ -106,10 +106,16 @@ export function hash(input: string, options: IHashOptions = {}): string {
 
     hashFunction.update(input, "utf8");
 
-    const hashedInput = hashFunction.digest("hex");
+    let hashedInput = hashFunction.digest("hex");
+
+    console.log(hashedInput);
 
     if (options.length) {
         return hashedInput.slice(0, options.length);
+    }
+
+    if(!(/[a-zA-Z]/).test(hashedInput.charAt(0))) {
+        return `"${hashedInput}"`;
     }
 
     return hashedInput;

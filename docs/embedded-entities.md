@@ -10,7 +10,9 @@ All those entities have few things in common - `first name` and `last name` prop
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()
@@ -92,7 +94,9 @@ Then you can "connect" those columns in your entities:
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 import {Name} from "./Name";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
     
     @PrimaryGeneratedColumn()

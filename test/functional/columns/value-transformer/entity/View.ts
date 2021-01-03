@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "../../../../../src";
 
-@Entity()
+@Entity({
+    name: "VIEWS"
+})
 export class View {
     @PrimaryGeneratedColumn("uuid")
     id: string;

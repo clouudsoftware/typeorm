@@ -113,6 +113,130 @@ export class OracleDriver implements Driver {
     ];
 
     /**
+     * 
+     * List of reserved words in Oracle
+     * 
+     * You cannot use Oracle SQL reserved words as nonquoted identifiers. Quoted identifiers 
+     * can be reserved words, although this is not recommended therefore column names are
+     * forbidden from being one of these
+     * 
+     * @see https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Oracle-SQL-Reserved-Words.html#GUID-55C49D1E-BE08-4C50-A9DD-8593EB925612
+     * 
+     */
+    reservedWords = [
+        "ACCESS",
+        "ADD",
+        "ALL",
+        "ALTER", 
+        "AND",
+        "ANY",
+        "AS",
+        "ASC",
+        "AUDIT",
+        "BETWEEN", 
+        "BY",
+        "CHAR", 
+        "CHECK", 
+        "CLUSTER",
+        "COLUMN",
+        "COLUMN_VALUE",
+        "COMMENT",
+        "COMPRESS",
+        "CONNECT",
+        "CREATE",
+        "CURRENT",
+        "DATE",
+        "DECIMAL", 
+        "DEFAULT",
+        "DELETE",
+        "DESC",
+        "DISTINCT", 
+        "DROP",
+        "ELSE",
+        "EXCLUSIVE",
+        "EXISTS",
+        "FILE",
+        "FLOAT", 
+        "FOR",
+        "FROM",
+        "GRANT",
+        "GROUP",
+        "HAVING",
+        "IDENTIFIED",
+        "IMMEDIATE",
+        "IN",
+        "INCREMENT",
+        "INDEX",
+        "INITIAL",
+        "INSERT",
+        "INTEGER",
+        "INTERSECT", 
+        "INTO",
+        "IS",
+        "LEVEL",
+        "LIKE",
+        "LOCK",
+        "LONG",
+        "MAXEXTENTS",
+        "MINUS",
+        "MLSLABEL",
+        "MODE",
+        "MODIFY",
+        "NESTED_TABLE_ID",
+        "NOAUDIT",
+        "NOCOMPRESS",
+        "NOT",
+        "NOWAIT",
+        "NULL",
+        "NUMBER",
+        "OF",
+        "OFFLINE",
+        "ON",
+        "ONLINE",
+        "OPTION",
+        "OR",
+        "ORDER", 
+        "PCTFREE",
+        "PRIOR",
+        "PUBLIC",
+        "RAW",
+        "RENAME",
+        "RESOURCE",
+        "REVOKE",
+        "ROW",
+        "ROWID",
+        "ROWNUM",
+        "ROWS" ,
+        "SELECT", 
+        "SESSION",
+        "SET",
+        "SHARE",
+        "SIZE",
+        "SMALLINT", 
+        "START",
+        "SUCCESSFUL",
+        "SYNONYM",
+        "SYSDATE",
+        "TABLE",
+        "THEN",
+        "TO",
+        "TRIGGER", 
+        "UID",
+        "UNION", 
+        "UNIQUE", 
+        "UPDATE",
+        "USER",
+        "VALIDATE",
+        "VALUES",
+        "VARCHAR",
+        "VARCHAR2",
+        "VIEW",
+        "WHENEVER",
+        "WHERE",
+        "WITH",
+    ];
+
+    /**
      * Gets list of spatial column data types.
      */
     spatialTypes: ColumnType[] = [];
@@ -339,8 +463,8 @@ export class OracleDriver implements Driver {
     /**
      * Escapes a column name.
      */
-    escape(columnName: string, isTable?: boolean, isAlias?: boolean): string {
-        return (isTable || !isAlias) ? columnName.toUpperCase() : `"${columnName}"`;
+    escape(columnName: string): string {
+        return columnName.toUpperCase();
     }
 
     /**

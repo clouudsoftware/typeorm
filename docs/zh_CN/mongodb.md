@@ -20,7 +20,9 @@ TypeORM 大多数功能都是特定于 RDBMS 的，
 ```typescript
 import { Entity, ObjectID, ObjectIdColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @ObjectIdColumn()
   id: ObjectID;
@@ -89,7 +91,9 @@ export class Photo {
 ```typescript
 import { Entity, ObjectID, ObjectIdColumn, Column } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @ObjectIdColumn()
   id: ObjectID;

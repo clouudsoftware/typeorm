@@ -15,7 +15,9 @@
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -35,7 +37,9 @@ export class User {
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -57,7 +61,9 @@ export class User {
 ```typescript
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 
-@Entity()
+@Entity({
+    name: "USERS"
+})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
